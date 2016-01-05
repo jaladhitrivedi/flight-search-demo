@@ -15,6 +15,7 @@ Add-on features of the App:
 
 Steps to run the App demo:
 
-1.    npm install - to install all node modules 
-2.    node server.js  - It runs the http server on NodeJS platform which serves data through REST APIs to the application
+1.    node server.js  - It runs the http server on NodeJS platform which serves data through REST APIs to the application
 2.    open http://localhost:9000 - It is the AngularJS powered Front end to Search flights between 2 cities
+
+Note: If some of the node modules are not working at your end due to different version, please remove node_modules folder from the codebase and run "npm install" command before performing aforementioned steps.
