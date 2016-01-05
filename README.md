@@ -8,7 +8,7 @@ The Flight Search App have the following features,
 6.    From the search result page user should be allowed to change search criteria.
 7.    On search result page there should be a slider where user can set min value and max value for price. Once the user set the min and max values the results list should be filtered accordingly.
  
-Addon features of the App:
+Add-on features of the App:
 
 1.    Responsive layout
 2.    Persist last search using local storage. And populate fields as per the last search.
