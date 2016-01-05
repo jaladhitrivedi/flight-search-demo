@@ -1,0 +1,83 @@
+<div class="search-tabs search-tabs-bg">
+    <h1>Search for Flight</h1>
+    <form name="frmFlightSearch" ng-submit="flightCtrl.getFlights()">
+        <div class="tabbable">
+            <ul class="nav nav-pills nav-sm nav-no-br mb10" id="flightChooseTab">
+                <li ng-class="{'active': flightCtrl.tripType==2}"><a href="javascript:;" ng-click="flightCtrl.tripType=2">Round Trip</a></li>
+                <li ng-class="{'active': flightCtrl.tripType==1}"><a href="javascript:;" ng-click="flightCtrl.tripType=1">One Way</a></li>
+            </ul>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
+                                <label>From</label>
+                                <select name="fromCity" class="form-control" data-ng-options="o as o.title for o in flightCtrl.cities track by o.id" data-ng-model="flightCtrl.fromCity" required>
+                                    <option style="display:none" value="">select city</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
+                                <label>To</label>
+                                <select name="toCity" class="form-control" data-ng-options="o as o.title for o in flightCtrl.cities track by o.id" data-ng-model="flightCtrl.toCity" required>
+                                    <option style="display:none" value="">select city</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-daterange" data-date-format="M d, D">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
+                                    <label>Departing</label>
+                                    <input class="form-control" name="start" type="date" ng-model="flightCtrl.startDate" required/>
+                                </div>
+                            </div>
+                            <div class="col-md-4" ng-if="flightCtrl.tripType==2">
+                                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
+                                    <label>Returning</label>
+                                    <input class="form-control" name="end" ng-model="flightCtrl.endDate" type="date" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-group-lg form-group-select-plus">
+                                    <label>Passengers</label>
+                                    <select name="passengers" data-ng-options="o as o for o in [1,2,3,4,5]" ng-model="flightCtrl.passengers" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-lg" type="submit">Search for Flights</button>
+    </form>
+</div>
+<h3 class="booking-title" ng-if="flightCtrl.startDate != ''">{{flightCtrl.flights.length}} Flights between {{flightCtrl.fromCity.title}} to {{flightCtrl.toCity.title}} on {{flightCtrl.startDate | date}} <span ng-if="flightCtrl.tripType==2"> and {{flightCtrl.endDate | date}}</span></h3>
+<div class="row" ng-if="flightCtrl.flights.length > 0"><div class="col-md-12"><rzslider rz-slider-model="flightCtrl.minPrice" rz-slider-high="flightCtrl.maxPrice" rz-slider-options="flightCtrl.slider_options"></rzslider></div></div>
+<div class="row" ng-if="flightCtrl.flights.length > 0">
+    <div class="col-md-12">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="flight in flightCtrl.flights">
+                <div class="row">
+                    <div class="col-md-2">{{flight.title}}</div>
+                    <div class="col-md-5">
+                        <h5>{{flight.time}}</h5> <p>Sun, Mar 22</p>
+                        <p class="booking-item-destination" ng-if="flightCtrl.fromCity.id == flight.from_city_id">{{flightCtrl.fromCity.title}}, {{flightCtrl.toCity.title}} (LHR)</p>
+                        <p class="booking-item-destination" ng-if="flightCtrl.fromCity.id == flight.to_city_id">{{flightCtrl.toCity.title}}, {{flightCtrl.fromCity.title}} (RHL)</p>
+                    </div>
+                    <div class="col-md-2">
+                        <h5>{{flight.duration}}</h5>
+                    </div>
+                    <div class="col-md-3"><span class="booking-item-price">${{flight.price}}</span><span>/person</span>
+                        <p class="booking-item-flight-class">Total Price: ${{flight.price*flightCtrl.passengers}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
